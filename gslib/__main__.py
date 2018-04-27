@@ -357,10 +357,12 @@ def main():
       sys.stderr.write(
           'config_file_list: %s\n' % boto_util.GetBotoConfigFileList())
       sys.stderr.write('config: %s\n' % str(config_items))
-    elif quiet:
-      _ConfigureLogging(level=logging.WARNING)
     else:
-      _ConfigureLogging(level=logging.INFO)
+      if quiet:
+        _ConfigureLogging(level=logging.WARNING)
+      else:
+        _ConfigureLogging(level=logging.INFO)
+
       # oauth2client uses INFO and WARNING logging in places that would better
       # correspond to gsutil's debug logging (e.g., when refreshing
       # access tokens), so we bump the threshold one level higher where
